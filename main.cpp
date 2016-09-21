@@ -105,8 +105,6 @@ void array::merge(int l, int m, int r){
         k++;
     }
 
-    /* Copy the remaining elements of R[], if there
-       are any */
     while (j < n2)
     {
         arr[k] = R[j];
@@ -142,11 +140,9 @@ int array::partit(int p, int r) {
     for (int j = p; j < r; j++) {
         if( arr[j] <= pivot) {
             i++;
-            //if (arr[i] >= pivot) {
             int temp = arr[j];
             arr[j] = arr[i];
             arr[i] = temp;
-            //}
         }
 }
         int temp = arr[i+1];
@@ -245,5 +241,7 @@ e.print_array();
 cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl;
 }
 
-//Please note that we've tried to put duration count in functions.
-//But  doing it outside of function turned out to be more precise.
+//In collaboration with Gagik Papikyan
+//Please note that we've tried to put duration count in in-class functions
+//to avoid making int main hardly readable. But  doing it outside of 
+//function turned out to be more precise in terms of measuring sorting time.
