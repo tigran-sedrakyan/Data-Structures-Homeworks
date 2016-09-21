@@ -242,8 +242,3 @@ cout << "Quicksort:" << endl;
 e.print_array();
 cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl;
 }
-
-//In collaboration with Gagik Papikyan
-//Please note that we've tried to put duration count in in-class functions
-//to avoid making int main hardly readable. But  doing it outside of 
-//function turned out to be more precise in terms of measuring sorting time.
