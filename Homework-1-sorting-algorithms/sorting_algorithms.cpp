@@ -198,6 +198,11 @@ cin >> h;
 for (int i = 0; i < n; i++){
     arr[i] = (rand()%(h-l)) + l;
 }
+cout << "Array generated: " << endl << "{ ";
+for (int i = 0; i < n; i++){
+    cout << arr[i] << ", ";
+}
+cout << "}" << endl << endl;
 }
 else {
     cout << "Error. Enter 1 or 2" << endl;
@@ -210,7 +215,7 @@ array a(arr, n);
     auto duration_ins = duration_cast<nanoseconds>( t2 - t1 ).count();
 cout << "Insertion Sort:" << endl;
 a.print_array();
-cout << "Time needed to perform insertion sort is " << duration_ins << " nanoseconds!" << endl;
+cout << "Time needed to perform insertion sort is " << duration_ins << " nanoseconds!" << endl << endl;
 
 array b(arr, n);
     high_resolution_clock::time_point t3 = high_resolution_clock::now();
@@ -219,7 +224,7 @@ array b(arr, n);
     auto duration_sel = duration_cast<nanoseconds>( t4 - t3 ).count();
 cout << "Selection Sort:" << endl;
 b.print_array();
-cout << "Time needed to perform selection sort is " << duration_sel << " nanoseconds!" << endl;
+cout << "Time needed to perform selection sort is " << duration_sel << " nanoseconds!" << endl << endl;
 
 array c(arr, n);
     high_resolution_clock::time_point t5 = high_resolution_clock::now();
@@ -228,7 +233,7 @@ array c(arr, n);
     auto duration_bubble = duration_cast<nanoseconds>( t6 - t5 ).count();
 cout << "Bubble Sort:" << endl;
 c.print_array();
-cout << "Time needed to perform bubble sort is " << duration_bubble << " nanoseconds!" << endl;
+cout << "Time needed to perform bubble sort is " << duration_bubble << " nanoseconds!" << endl << endl;
 
 array d(arr, n);
     high_resolution_clock::time_point t7 = high_resolution_clock::now();
@@ -237,7 +242,7 @@ array d(arr, n);
     auto duration_merge = duration_cast<nanoseconds>( t8 - t7 ).count();
 cout << "Merge Sort:" << endl;
 d.print_array();
-cout << "Time needed to perform merge sort is " << duration_merge << " nanoseconds!" << endl;
+cout << "Time needed to perform merge sort is " << duration_merge << " nanoseconds!" << endl << endl;
 
 array e(arr, n);
     high_resolution_clock::time_point t9 = high_resolution_clock::now();
@@ -246,5 +251,5 @@ array e(arr, n);
     auto duration_quick = duration_cast<nanoseconds>( t10 - t9 ).count();
 cout << "Quicksort:" << endl;
 e.print_array();
-cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl;
+cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl << endl;
 }
