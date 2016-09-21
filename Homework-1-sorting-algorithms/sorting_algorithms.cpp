@@ -1,4 +1,10 @@
 //Some changes possible (though not guaranteed!)
+//In collaboration with Gagik Papikyan
+
+//Please note that we've tried to put duration count in in-class sorting functions
+//to avoid making int main hardly readable. But  doing it outside of 
+//function turned out to be more precise in terms of measuring sorting time.
+
 
 #include <iostream>
 #include <cstdlib>
