@@ -5,6 +5,12 @@
 //to avoid making int main hardly readable. But  doing it outside of 
 //function turned out to be more precise in terms of measuring sorting time.
 
+//Also note that we created separate function and did not passed order as an 
+//argument for them for the same reason. Doing it separately gives us more precise
+//time output.
+
+//As nowadays time is the most valuable resource, we considered the timer as the 
+//most important part of our program and tried to be as precise as possible!!! :)
 
 #include <iostream>
 #include <cstdlib>
@@ -20,12 +26,19 @@ class array {
     public:
     array(int*, int);
     void insertion_sort();
+    void insertion_sort_decreasing();
     void selection_sort();
+    void selection_sort_decreasing();
     void bubblesort();
+    void bubblesort_decreasing();
     void quicksort(int, int);
+    void quicksort_decreasing(int, int);
     int partit(int, int);
+    int partit_decreasing(int, int);
     void merge_sort(int , int);
+    void merge_sort_decreasing(int , int);
     void merge(int, int, int);
+    void merge_decreasing(int, int, int);
     void print_array();
 };
 
@@ -49,10 +62,35 @@ void array::insertion_sort() {
     }
 }
 
+void array::insertion_sort_decreasing() {
+    for (int j = 1; j < n; j++) {
+         int key = arr[j];
+         int i =  j - 1;
+         while (i >= 0 && arr[i] < key) {
+              arr[i+1] = arr[i];
+              i--;
+              arr[i+1] = key;
+        }
+    }
+}
+
 void array::bubblesort() {
     for (int j=0; j < n; j++) {
         for (int i = j+1; i < n; i++) {
             if (arr[i] < arr[j])
+              {
+                int tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+              }
+}
+}
+}
+
+void array::bubblesort_decreasing() {
+    for (int j=0; j < n; j++) {
+        for (int i = j+1; i < n; i++) {
+            if (arr[i] > arr[j])
               {
                 int tmp = arr[i];
                 arr[i] = arr[j];
@@ -67,6 +105,22 @@ for (int j=0; j < n-1; j++) {
   int min = j;
     for (int i = j+1; i<n; i++) {
         if (arr[i] < arr[min])
+        {
+            min = i;
+        }
+    }
+        int tmp = arr[min];
+        arr[min] = arr[j];
+        arr[j] = tmp;
+
+      }
+}
+
+void array::selection_sort_decreasing() {
+for (int j=0; j < n-1; j++) {
+  int min = j;
+    for (int i = j+1; i<n; i++) {
+        if (arr[i] > arr[min])
         {
             min = i;
         }
@@ -121,6 +175,49 @@ void array::merge(int l, int m, int r){
     }
 }
 
+void array::merge_decreasing(int l, int m, int r){
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int L[n1];
+    int R[n2];
+    for (int i = 0; i < n1; i++) {
+        L[i] = arr[l+i];
+    }
+    for (int j = 0; j < n2; j++) {
+        R[j] = arr[m+j+1];
+    }
+    int i = 0;
+    int j = 0;
+    int k = l;
+    while (i < n1 && j < n2)
+    {
+        if (L[i] > R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+        while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
 void array::merge_sort(int l, int r)
 {
     if (l < r)
@@ -133,13 +230,32 @@ void array::merge_sort(int l, int r)
     }
 }
 
+void array::merge_sort_decreasing(int l, int r)
+{
+    if (l < r)
+    {
+        int m = (l+r)/2;
+        merge_sort_decreasing(l, m);
+        merge_sort_decreasing(m+1, r);
+
+        merge_decreasing(l, m, r);
+    }
+}
+
 void array::quicksort(int p, int r) {
     if ( p < r ) {
     int q = partit(p,r);
     quicksort(p, q-1);
     quicksort(q + 1, r);
     }
+}
 
+void array::quicksort_decreasing(int p, int r) {
+    if ( p < r ) {
+    int q = partit_decreasing(p,r);
+    quicksort_decreasing(p, q-1);
+    quicksort_decreasing(q + 1, r);
+    }
 }
 
 int array::partit(int p, int r) {
@@ -147,6 +263,23 @@ int array::partit(int p, int r) {
     int i = p-1;
     for (int j = p; j < r; j++) {
         if( arr[j] <= pivot) {
+            i++;
+            int temp = arr[j];
+            arr[j] = arr[i];
+            arr[i] = temp;
+        }
+}
+        int temp = arr[i+1];
+        arr[i+1] = arr[r];
+        arr[r] = temp;
+        return i+1;
+}
+
+int array::partit_decreasing(int p, int r) {
+    int pivot = arr[r];
+    int i = p-1;
+    for (int j = p; j < r; j++) {
+        if( arr[j] > pivot) {
             i++;
             int temp = arr[j];
             arr[j] = arr[i];
@@ -210,6 +343,13 @@ else {
     cout << "Error. Enter 1 or 2" << endl;
 }
 
+cout << "In what order do you want to sort numbers?" << endl;
+cout << "1.Increasing" << endl << "2.Decreasing" << endl;
+int order;
+cin >> order;
+
+
+if (order == 1) {
 array a(arr, n);
     high_resolution_clock::time_point t1 = high_resolution_clock::now();
     a.insertion_sort();
@@ -254,4 +394,55 @@ array e(arr, n);
 cout << "Quicksort:" << endl;
 e.print_array();
 cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl << endl;
+}
+
+
+
+
+else if (order == 2) {
+array a(arr, n);
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    a.insertion_sort_decreasing();
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    auto duration_ins = duration_cast<nanoseconds>( t2 - t1 ).count();
+cout << "Insertion Sort:" << endl;
+a.print_array();
+cout << "Time needed to perform insertion sort is " << duration_ins << " nanoseconds!" << endl << endl;
+
+array b(arr, n);
+    high_resolution_clock::time_point t3 = high_resolution_clock::now();
+    b.selection_sort_decreasing();
+    high_resolution_clock::time_point t4 = high_resolution_clock::now();
+    auto duration_sel = duration_cast<nanoseconds>( t4 - t3 ).count();
+cout << "Selection Sort:" << endl;
+b.print_array();
+cout << "Time needed to perform selection sort is " << duration_sel << " nanoseconds!" << endl << endl;
+
+array c(arr, n);
+    high_resolution_clock::time_point t5 = high_resolution_clock::now();
+    c.bubblesort_decreasing();
+    high_resolution_clock::time_point t6 = high_resolution_clock::now();
+    auto duration_bubble = duration_cast<nanoseconds>( t6 - t5 ).count();
+cout << "Bubble Sort:" << endl;
+c.print_array();
+cout << "Time needed to perform bubble sort is " << duration_bubble << " nanoseconds!" << endl << endl;
+
+array d(arr, n);
+    high_resolution_clock::time_point t7 = high_resolution_clock::now();
+    d.merge_sort_decreasing(0, n-1);
+    high_resolution_clock::time_point t8 = high_resolution_clock::now();
+    auto duration_merge = duration_cast<nanoseconds>( t8 - t7 ).count();
+cout << "Merge Sort:" << endl;
+d.print_array();
+cout << "Time needed to perform merge sort is " << duration_merge << " nanoseconds!" << endl << endl;
+
+array e(arr, n);
+    high_resolution_clock::time_point t9 = high_resolution_clock::now();
+    e.quicksort_decreasing(0, n-1);
+    high_resolution_clock::time_point t10 = high_resolution_clock::now();
+    auto duration_quick = duration_cast<nanoseconds>( t10 - t9 ).count();
+cout << "Quicksort:" << endl;
+e.print_array();
+cout << "Time needed to perform quicksort is " << duration_quick << " nanoseconds!" << endl << endl;
+}
 }
